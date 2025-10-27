@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红娘专属择偶匹配工具</title>
+    <style>
+        body { font-family: 'Microsoft YaHei', sans-serif; padding: 20px; background-color: #f9f9f9; color: #333; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #ff6b6b; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background-color: #ff5252; }
+        #result { margin-top: 20px; padding: 15px; background-color: #e8f5e9; border-radius: 5px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 择偶快速匹配</h1>
+        <div class="input-group">
+            <label for="age">年龄：</label>
+            <input type="number" id="age">
+        </div>
+        <div class="input-group">
+            <label for="gender">性别：</label>
+            <select id="gender">
+                <option value="male">男</option>
+                <option value="female">女</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="income">年收入（万）：</label>
+            <select id="income">
+                <option value="10">10万以下</option>
+                <option value="20">10-20万</option>
+                <option value="30">20-30万</option>
+                <option value="50">30-50万</option>
+                <option value="100">50万以上</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="education">最高学历：</label>
+            <select id="education">
+                <option value="college">大专</option>
+                <option value="bachelor">本科</option>
+                <option value="master">硕士</option>
+                <option value="doctor">博士及以上</option>
+            </select>
+        </div>
+        <button onclick="calculateMatch()">开始匹配</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateMatch() {
+            // 获取用户输入的值
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const income = document.getElementById('income').value;
+            const education = document.getElementById('education').value;
+
+            // 简单的匹配规则算法 (你可以根据你的经验大量修改和丰富这里！)
+            let suggestedAgeRange = "";
+            let suggestedIncome = "";
+            let suggestedEducation = "";
+
+            // 1. 年龄匹配逻辑示例
+            if (age < 25) {
+                suggestedAgeRange = "22-26岁";
+            } else if (age >= 25 && age < 30) {
+                suggestedAgeRange = "24-32岁";
+            } else if (age >= 30 && age < 40) {
+                suggestedAgeRange = "28-38岁";
+            } else {
+                suggestedAgeRange = "35-45岁";
+            }
+
+            // 2. 收入匹配逻辑示例
+            if (income === "10") {
+                suggestedIncome = "8-15万";
+            } else if (income === "20") {
+                suggestedIncome = "15-25万";
+            } else if (income === "30") {
+                suggestedIncome = "20-35万";
+            } else if (income === "50") {
+                suggestedIncome = "30-60万";
+            } else {
+                suggestedIncome = "50万以上，注重资产配置和价值观契合";
+            }
+
+            // 3. 学历匹配逻辑示例
+            if (education === "college") {
+                suggestedEducation = "大专或本科";
+            } else if (education === "bachelor") {
+                suggestedEducation = "本科或硕士";
+            } else if (education === "master") {
+                suggestedEducation = "硕士为佳";
+            } else {
+                suggestedEducation = "硕士及以上，重视精神交流";
+            }
+
+            // 生成并显示匹配结果
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>💡 为您推荐的匹配条件：</h3>
+                <p><strong>年龄范围：</strong>${suggestedAgeRange}</p>
+                <p><strong>收入水平：</strong>${suggestedIncome}</p>
+                <p><strong>学历建议：</strong>${suggestedEducation}</p>
+                <p><strong>其他建议：</strong>建议寻找性格互补、有共同爱好、生活理念一致的伴侣。</p>
+            `;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
